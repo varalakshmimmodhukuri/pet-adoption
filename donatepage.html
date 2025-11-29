@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Save Lives - Pet Adoption & Rescue</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 50%, #ce93d8 100%);
+            color: #4a148c;
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="50" cy="50" r="20" fill="rgba(255,255,255,0.1)"/><circle cx="150" cy="80" r="15" fill="rgba(255,255,255,0.08)"/><circle cx="100" cy="150" r="25" fill="rgba(255,255,255,0.06)"/><path d="M30,30 Q50,10 70,30 Q50,50 30,30" fill="rgba(255,255,255,0.05)"/></svg>');
+            animation: gentleFloat 15s ease-in-out infinite;
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(74, 20, 140, 0.3);
+        }
+
+        .header p {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 500px;
+            gap: 60px;
+            padding: 80px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .story-section {
+            padding: 0 20px;
+        }
+
+        .story-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            border-left: 5px solid #9c27b0;
+            transition: transform 0.3s ease;
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .story-card h3 {
+            color: #9c27b0;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pet-highlight {
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .pet-highlight h4 {
+            color: #7b1fa2;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .urgent-needs {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .urgent-needs h4 {
+            color: #7b1fa2;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .needs-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .needs-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(123, 31, 162, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .needs-list li:last-child {
+            border-bottom: none;
+        }
+
+        .cost {
+            background: #9c27b0;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .donation-panel {
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            margin: 0 20px;
+            border: 2px solid #ba68c8;
+        }
+
+        .panel-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .panel-header h2 {
+            color: #9c27b0;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .panel-header .subtitle {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .quick-amounts {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .amount-option {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .amount-option:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(156,39,176,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .amount-option:hover:before {
+            left: 100%;
+        }
+
+        .amount-option:hover,
+        .amount-option.selected {
+            border-color: #9c27b0;
+            background: #9c27b0;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .amount-option .amount {
+            font-size: 1.4rem;
+            display: block;
+        }
+
+        .amount-option .description {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .custom-amount-section {
+            margin-bottom: 25px;
+        }
+
+        .custom-amount-section label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #9c27b0;
+        }
+
+        .amount-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .amount-input:focus {
+            outline: none;
+            border-color: #9c27b0;
+            box-shadow: 0 0 0 3px rgba(156,39,176,0.2);
+        }
+
+        .frequency-selector {
+            margin-bottom: 25px;
+        }
+
+        .frequency-options {
+            display: flex;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .frequency-option {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            background: #fafafa;
+            transition: all 0.3s ease;
+            border: none;
+            font-weight: 600;
+        }
+
+        .frequency-option.active {
+            background: #9c27b0;
+            color: white;
+        }
+
+        .donate-button {
+            width: 100%;
+            padding: 18px 30px;
+            background: linear-gradient(135deg, #9c27b0 0%, #ba68c8 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .donate-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .donate-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(156,39,176,0.4);
+        }
+
+        .donate-button:hover:before {
+            left: 100%;
+        }
+
+        .security-info {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .monthly-impact {
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .monthly-impact h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .impact-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1b5e20;
+        }
+
+        .testimonial {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .testimonial:before {
+            content: '"';
+            font-size: 4rem;
+            color: #8e24aa;
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            opacity: 0.3;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: #6a1b9a;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 40px 0;
+            }
+
+            .donation-panel {
+                position: static;
+                margin: 20px;
+            }
+
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .header p {
+                font-size: 1.1rem;
+            }
+
+            .quick-amounts {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .heartbeat {
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Every Life Matters</h1>
+            <p>Help us rescue, rehabilitate, and rehome pets in need. Your donation directly saves lives and creates forever families.</p>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="story-section">
+            <div class="story-card">
+                <h3>🐕 Meet Max's Story</h3>
+                <p>Max was found abandoned in a parking lot, malnourished and scared. Thanks to donations like yours, we were able to provide him with medical care, love, and training. Today, Max is thriving in his forever home with a loving family who adores him.</p>
+                
+                <div class="pet-highlight">
+                    <h4>Max's Journey</h4>
+                    <p><strong>Rescue → Recovery → Rehomed</strong><br>
+                    Total cost: $847 | Time in care: 3 months<br>
+                    <em>Now living his best life with the Johnson family!</em></p>
+                </div>
+            </div>
+
+            <div class="story-card">
+                <h3>🚨 Current Emergency Needs</h3>
+                <p>Right now, we have 23 animals in our care who need immediate help. Here's what your donation can provide:</p>
+                
+                <div class="urgent-needs">
+                    <h4>⏰ Urgent Medical Cases</h4>
+                    <ul class="needs-list">
+                        <li>
+                            <span>Emergency surgery for Luna (hit by car)</span>
+                            <span class="cost">$1,200</span>
+                        </li>
+                        <li>
+                            <span>Heartworm treatment for 3 dogs</span>
+                            <span class="cost">$900</span>
+                        </li>
+                        <li>
+                            <span>Vaccinations for 12 puppies</span>
+                            <span class="cost">$360</span>
+                        </li>
+                        <li>
+                            <span>Spay/neuter surgeries (5 cats)</span>
+                            <span class="cost">$500</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="testimonial">
+                <div class="testimonial-text">
+                    "Paws & Hearts Rescue saved my best friend. When I adopted Bella, she was broken and afraid. The staff's dedication and the community's support gave her a second chance. Now she's the happiest dog I know!"
+                </div>
+                <div class="testimonial-author">— Sarah M., Happy Pet Parent</div>
+            </div>
+
+            <div class="story-card">
+                <h3>📊 Your Impact This Year</h3>
+                <p>Thanks to amazing supporters like you, we've accomplished incredible things:</p>
+                <ul style="margin: 20px 0; padding-left: 20px;">
+                    <li>🏠 <strong>417 pets</strong> found loving homes</li>
+                    <li>🏥 <strong>1,200+ medical procedures</strong> performed</li>
+                    <li>🍽️ <strong>52,000 meals</strong> provided</li>
+                    <li>💕 <strong>98% adoption success rate</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="donation-panel">
+            <div class="panel-header">
+                <h2 class="heartbeat">💖 Donate Now</h2>
+                <p class="subtitle">Choose your impact level</p>
+            </div>
+
+            <form id="donationForm">
+                <div class="quick-amounts">
+                    <div class="amount-option" data-amount="25">
+                        <span class="amount">$25</span>
+                        <span class="description">Feeds 1 pet for 2 weeks</span>
+                    </div>
+                    <div class="amount-option" data-amount="50">
+                        <span class="amount">$50</span>
+                        <span class="description">Basic vet checkup</span>
+                    </div>
+                    <div class="amount-option" data-amount="100">
+                        <span class="amount">$100</span>
+                        <span class="description">Vaccination package</span>
+                    </div>
+                    <div class="amount-option" data-amount="250">
+                        <span class="amount">$250</span>
+                        <span class="description">Spay/neuter surgery</span>
+                    </div>
+                </div>
+
+                <div class="custom-amount-section">
+                    <label for="customAmount">Other Amount:</label>
+                    <input type="number" id="customAmount" class="amount-input" placeholder="$" min="1">
+                </div>
+
+                <div class="frequency-selector">
+                    <div class="frequency-options">
+                        <button type="button" class="frequency-option active" data-frequency="one-time">One Time</button>
+                        <button type="button" class="frequency-option" data-frequency="monthly">Monthly</button>
+                    </div>
+                </div>
+
+                <div class="monthly-impact" id="monthlyImpact" style="display: none;">
+                    <h4>Your Monthly Impact:</h4>
+                    <div class="impact-number" id="impactNumber">0</div>
+                    <div id="impactText">pets helped per year</div>
+                </div>
+
+                <button type="submit" class="donate-button">
+                    🐾 Save Lives Now
+                </button>
+
+                <div class="security-info">
+                    🔒 Secure & Encrypted | Tax-Deductible Receipt
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let selectedAmount = 0;
+        let frequency = 'one-time';
+
+        // Amount selection
+        document.querySelectorAll('.amount-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.amount-option').forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+                selectedAmount = parseInt(option.dataset.amount);
+                document.getElementById('customAmount').value = '';
+                updateMonthlyImpact();
+            });
+        });
+
+        // Custom amount input
+        document.getElementById('customAmount').addEventListener('input', (e) => {
+            if (e.target.value) {
+                document.querySelectorAll('.amount-option').forEach(o => o.classList.remove('selected'));
+                selectedAmount = parseInt(e.target.value) || 0;
+                updateMonthlyImpact();
+            }
+        });
+
+        // Frequency selection
+        document.querySelectorAll('.frequency-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.frequency-option').forEach(o => o.classList.remove('active'));
+                option.classList.add('active');
+                frequency = option.dataset.frequency;
+                updateMonthlyImpact();
+            });
+        });
+
+        function updateMonthlyImpact() {
+            const monthlyImpactDiv = document.getElementById('monthlyImpact');
+            const impactNumber = document.getElementById('impactNumber');
+            const impactText = document.getElementById('impactText');
+            
+            if (frequency === 'monthly' && selectedAmount > 0) {
+                monthlyImpactDiv.style.display = 'block';
+                const yearlyAmount = selectedAmount * 12;
+                const petsHelped = Math.floor(yearlyAmount / 85); // Average cost per pet
+                impactNumber.textContent = petsHelped;
+                impactText.textContent = petsHelped === 1 ? 'pet helped per year' : 'pets helped per year';
+            } else {
+                monthlyImpactDiv.style.display = 'none';
+            }
+        }
+
+        // Form submission
+        document.getElementById('donationForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const finalAmount = selectedAmount || parseInt(document.getElementById('customAmount').value) || 0;
+            
+            if (finalAmount <= 0) {
+                alert('Please select or enter a donation amount.');
+                return;
+            }
+            
+            const donateBtn = document.querySelector('.donate-button');
+            const originalText = donateBtn.innerHTML;
+            donateBtn.innerHTML = '🔄 Processing your kindness...';
+            donateBtn.disabled = true;
+            
+            setTimeout(() => {
+                alert(`🎉 Thank you for your ${frequency} donation of ${finalAmount}!\n\nYour generosity is already making a difference in the lives of rescued pets. You'll receive a confirmation email shortly with your tax-deductible receipt.\n\n💝 From all of us at Paws & Hearts Rescue - THANK YOU!`);
+                donateBtn.innerHTML = originalText;
+                donateBtn.disabled = false;
+                
+                // Reset form
+                document.querySelectorAll('.amount-option').forEach(o => o.classList.remove('selected'));
+                document.getElementById('customAmount').value = '';
+                selectedAmount = 0;
+                updateMonthlyImpact();
+            }, 2500);
+        });
+
+        // Add some interactive elements
+        document.querySelectorAll('.story-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.borderLeftWidth = '8px';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.borderLeftWidth = '5px';
+            });
+        });
+    </script>
+</body>
+</html>

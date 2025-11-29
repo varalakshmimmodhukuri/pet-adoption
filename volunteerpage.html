@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer With Us - Paws & Hearts Rescue</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f8f4ff 0%, #e8d5ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(139, 69, 19, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #8b5cf6;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo::before {
+            content: "🐾";
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #8b5cf6;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #8b5cf6;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(255, 255, 255, 0.9) 100%);
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.05) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: #8b5cf6;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: slideUp 1s ease-out 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #8b5cf6, #a855f7);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            animation: slideUp 1s ease-out 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .volunteer-opportunities {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #8b5cf6;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(45deg, #8b5cf6, #a855f7);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .opportunities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .opportunity-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .opportunity-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .opportunity-card:hover::before {
+            left: 100%;
+        }
+
+        .opportunity-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+            border-color: #d8b4fe;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: #8b5cf6;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .card-requirements {
+            background: #f8f4ff;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #8b5cf6;
+        }
+
+        .requirements-title {
+            font-weight: bold;
+            color: #8b5cf6;
+            margin-bottom: 0.5rem;
+        }
+
+        .volunteer-form {
+            background: linear-gradient(135deg, #f8f4ff 0%, white 100%);
+            padding: 4rem 0;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #8b5cf6;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #f8f4ff;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item:hover {
+            background: #e8d5ff;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #8b5cf6, #a855f7);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+        }
+
+        .impact-section {
+            background: white;
+            padding: 4rem 0;
+        }
+
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-card {
+            padding: 2rem;
+            background: linear-gradient(135deg, #f8f4ff 0%, #e8d5ff 100%);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #8b5cf6;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        footer {
+            background: #8b5cf6;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #d8b4fe;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .opportunities-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Pet Adoption</div>
+            <ul class="nav-links">
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Make a Difference Today</h1>
+                <p>Join our amazing team of volunteers and help us save lives, one paw at a time. Your time and compassion can transform the lives of animals in need.</p>
+                <a href="#volunteer-form" class="cta-button">Start Volunteering</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="volunteer-opportunities">
+        <div class="container">
+            <h2 class="section-title">Volunteer Opportunities</h2>
+            <div class="opportunities-grid">
+                <div class="opportunity-card">
+                    <span class="card-icon">🐕</span>
+                    <h3 class="card-title">Dog Walker & Socializer</h3>
+                    <p class="card-description">Help our furry friends get the exercise and attention they need. Spend quality time walking, playing, and socializing with dogs of all sizes and temperaments.</p>
+                    <div class="card-requirements">
+                        <div class="requirements-title">Requirements:</div>
+                        <p>Love for dogs, basic training provided, flexible schedule, minimum 2 hours per week</p>
+                    </div>
+                </div>
+
+                <div class="opportunity-card">
+                    <span class="card-icon">🐱</span>
+                    <h3 class="card-title">Cat Care Specialist</h3>
+                    <p class="card-description">Our feline friends need gentle care and companionship. Help with feeding, cleaning, and providing love to cats waiting for their forever homes.</p>
+                    <div class="card-requirements">
+                        <div class="requirements-title">Requirements:</div>
+                        <p>Cat experience preferred, gentle nature, attention to detail, minimum 3 hours per week</p>
+                    </div>
+                </div>
+
+                <div class="opportunity-card">
+                    <span class="card-icon">🏥</span>
+                    <h3 class="card-title">Medical Assistant</h3>
+                    <p class="card-description">Support our veterinary team with basic medical care, administering medications, and helping during check-ups and treatments.</p>
+                    <div class="card-requirements">
+                        <div class="requirements-title">Requirements:</div>
+                        <p>Medical background preferred, training provided, reliable schedule, minimum 4 hours per week</p>
+                    </div>
+                </div>
+
+                <div class="opportunity-card">
+                    <span class="card-icon">📱</span>
+                    <h3 class="card-title">Social Media & Marketing</h3>
+                    <p class="card-description">Help us spread the word about our adoptable pets and rescue mission through creative social media content and marketing campaigns.</p>
+                    <div class="card-requirements">
+                        <div class="requirements-title">Requirements:</div>
+                        <p>Social media experience, creative skills, photography skills a plus, flexible remote work</p>
+                    </div>
+                </div>
+
+                <div class="opportunity-card">
+                    <span class="card-icon">🚐</span>
+                    <h3 class="card-title">Transport Volunteer</h3>
+                    <p class="card-description">Help transport animals to veterinary appointments, adoption events, and their new homes. Make the journey comfortable and safe for our precious cargo.</p>
+                    <div class="card-requirements">
+                        <div class="requirements-title">Requirements:</div>
+                        <p>Valid driver's license, reliable vehicle, background check, flexible availability</p>
+                    </div>
+                </div>
+
+                <div class="opportunity-card">
+                    <span class="card-icon">🎪</span>
+                    <h3 class="card-title">Event Coordinator</h3>
+                    <p class="card-description">Organize and run adoption events, fundraisers, and community outreach programs. Help us connect with the community and find homes for our animals.</p>
+                    <div class="card-requirements">
+                        <div class="requirements-title">Requirements:</div>
+                        <p>Organizational skills, event planning experience helpful, people skills, weekend availability</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="impact-section">
+        <div class="container">
+            <h2 class="section-title">Our Impact Together</h2>
+            <div class="impact-stats">
+                <div class="stat-card">
+                    <span class="stat-number">2,847</span>
+                    <div class="stat-label">Animals Rescued This Year</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">1,956</span>
+                    <div class="stat-label">Successful Adoptions</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">340</span>
+                    <div class="stat-label">Active Volunteers</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">15,000+</span>
+                    <div class="stat-label">Volunteer Hours</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="volunteer-form" id="volunteer-form">
+        <div class="container">
+            <div class="form-container">
+                <h2 class="section-title">Join Our Volunteer Family</h2>
+                <form id="volunteerForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" id="address" name="address">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="age">Age Group</label>
+                            <select id="age" name="age">
+                                <option value="">Select Age Group</option>
+                                <option value="16-17">16-17 (with parent consent)</option>
+                                <option value="18-25">18-25</option>
+                                <option value="26-40">26-40</option>
+                                <option value="41-65">41-65</option>
+                                <option value="65+">65+</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="availability">Weekly Availability</label>
+                            <select id="availability" name="availability">
+                                <option value="">Select Hours</option>
+                                <option value="2-4">2-4 hours per week</option>
+                                <option value="4-8">4-8 hours per week</option>
+                                <option value="8-16">8-16 hours per week</option>
+                                <option value="16+">16+ hours per week</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Areas of Interest (Select all that apply):</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="dogWalking" name="interests" value="dogWalking">
+                                <label for="dogWalking">Dog Walking & Socializing</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="catCare" name="interests" value="catCare">
+                                <label for="catCare">Cat Care</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="medical" name="interests" value="medical">
+                                <label for="medical">Medical Assistance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="transport" name="interests" value="transport">
+                                <label for="transport">Transportation</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="events" name="interests" value="events">
+                                <label for="events">Event Coordination</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="marketing" name="interests" value="marketing">
+                                <label for="marketing">Social Media & Marketing</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="experience">Previous Animal Care Experience</label>
+                        <textarea id="experience" name="experience" placeholder="Tell us about any previous experience with animals, volunteering, or relevant skills..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="motivation">Why do you want to volunteer with us?</label>
+                        <textarea id="motivation" name="motivation" placeholder="Share what motivates you to help animals and what you hope to gain from this experience..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Submit Application</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p>Danavaipeta, Rajahmundry</p>
+                    <p>+91 6382493541</p>
+                    <p>✉️ petadoption@gmail.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="adoptpage.html">Adopt a Pet</a></p>
+                    <p><a href="volunteerpage.html">Volunteer</a></p>
+                    <p><a href="donatepage.html">Donate</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <p><a href="#">Facebook</a></p>
+                    <p><a href="#">Instagram</a></p>
+                    <p><a href="#">Twitter</a></p>
+                    <p><a href="#">TikTok</a></p>
+                </div>
+            </div>
+            <p>&copy; 2025 Pet Adoption. All rights reserved. Made with ❤️ for animals in need.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission handling
+        document.getElementById('volunteerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Collect form data
+            const formData = new FormData(this);
+            const interests = [];
+            document.querySelectorAll('input[name="interests"]:checked').forEach(checkbox => {
+                interests.push(checkbox.value);
+            });
+            
+            // Simple form validation
+            const requiredFields = ['firstName', 'lastName', 'email', 'phone'];
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                const input = document.getElementById(field);
+                if (!input.value.trim()) {
+                    input.style.borderColor = '#ef4444';
+                    isValid = false;
+                } else {
+                    input.style.borderColor = '#e5e7eb';
+                }
+            });
+            
+            if (isValid) {
+                // Simulate form submission
+                const submitBtn = document.querySelector('.submit-btn');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Submitting...';
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    alert('Thank you for your application! We will contact you within 48 hours to discuss next steps.');
+                    this.reset();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }, 2000);
+            } else {
+                alert('Please fill in all required fields.');
+            }
+        });
+
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe cards for animation
+        document.querySelectorAll('.opportunity-card, .stat-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Add floating animation to hero background
+        const hero = document.querySelector('.hero');
+        let mouseX = 0;
+        let mouseY = 0;
+
+        hero.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) * 100;
+            mouseY = (e.clientY / window.innerHeight) * 100;
+            
+            hero.style.background = `linear-gradient(${mouseX}deg, rgba(139, 92, 246, 0.1) 0%, rgba(255, 255, 255, 0.9) 100%)`;
+        });
+    </script>
+</body>
+</html>

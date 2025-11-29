@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paws & Hearts | Adopt a Pet</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#8B4FB3',secondary:'#FF7F50',accent:'#98FF98'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .logo-font {
+            font-family: 'Pacifico', serif;
+        }
+        .custom-checkbox {
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #8B4FB3;
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+            outline: none;
+        }
+        .custom-checkbox:checked {
+            background-color: #8B4FB3;
+        }
+        .custom-checkbox:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 1px;
+            background-color: white;
+        }
+        .custom-radio {
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #8B4FB3;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            outline: none;
+        }
+        .custom-radio:checked {
+            border-color: #8B4FB3;
+        }
+        .custom-radio:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0.625rem;
+            height: 0.625rem;
+            border-radius: 50%;
+            background-color: #8B4FB3;
+        }
+        .custom-switch {
+            position: relative;
+            display: inline-block;
+            width: 3rem;
+            height: 1.5rem;
+        }
+        .custom-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 1.5rem;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 1.1rem;
+            width: 1.1rem;
+            left: 0.2rem;
+            bottom: 0.2rem;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #8B4FB3;
+        }
+        input:checked + .slider:before {
+            transform: translateX(1.5rem);
+        }
+        .custom-range {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 0.5rem;
+            border-radius: 0.25rem;
+            background: #e2e8f0;
+            outline: none;
+        }
+        .custom-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            background: #8B4FB3;
+            cursor: pointer;
+        }
+        .custom-range::-moz-range-thumb {
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            background: #8B4FB3;
+            cursor: pointer;
+            border: none;
+        }
+        .tab-active {
+            background-color: #8B4FB3;
+            color: white;
+        }
+        .pet-card-expanded {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            z-index: 100;
+        }
+        .filter-chip {
+            display: inline-flex;
+            align-items: center;
+            background-color: #f3e8ff;
+            color: #8B4FB3;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .filter-chip button {
+            margin-left: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="#" class="flex items-center">
+                <span class="logo-font text-primary text-2xl font-bold">Pet Adoption </span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="homepage.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Home</a>
+                <a href="adoptpage.html" data-readdy="true" class="text-primary font-medium transition-colors">Adopt</a>
+                <a href="donatepage.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Donate</a>
+                <a href="volunteerpage.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Volunteer</a>
+                <a href="aboutuspage.html" class="text-gray-800 hover:text-primary font-medium transition-colors">About Us</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Title Section -->
+        <section class="bg-primary/10 py-8">
+            <div class="container mx-auto px-4">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Find Your Perfect Companion</h1>
+                <p class="text-gray-600 max-w-3xl">Browse our available pets and discover your new best friend. Each animal has been rescued, cared for, and is ready to find their forever home.</p>
+            </div>
+        </section>
+
+        <!-- Search and Filter Section -->
+        <section class="bg-white py-6 shadow-sm sticky top-[61px] z-40">
+            <div class="container mx-auto px-4">
+                <!-- Search Bar -->
+                <div class="relative mb-6">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                        <i class="ri-search-line text-gray-400"></i>
+                    </div>
+                    <input type="text" id="searchPets" class="w-full pl-12 pr-4 py-3 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none" placeholder="Search pets by name, breed...">
+                </div>
+
+                <!-- Filter Options -->
+                <div class="flex flex-wrap gap-4 mb-6">
+                    <!-- Species Filter -->
+                    <div class="relative">
+                        <button id="speciesFilterBtn" class="flex items-center justify-between w-full md:w-auto px-4 py-2.5 bg-gray-100 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors">
+                            <span>Species</span>
+                            <i class="ri-arrow-down-s-line ml-2"></i>
+                        </button>
+                        <div id="speciesDropdown" class="hidden absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10 p-2">
+                            <div class="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer">
+                                <input type="checkbox" id="species-dog" class="custom-checkbox mr-3">
+                                <label for="species-dog" class="cursor-pointer">Dogs</label>
+                            </div>
+                            <div class="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer">
+                                <input type="checkbox" id="species-cat" class="custom-checkbox mr-3">
+                                <label for="species-cat" class="cursor-pointer">Cats</label>
+                            </div>
+                            <div class="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer">
+                                <input type="checkbox" id="species-other" class="custom-checkbox mr-3">
+                                <label for="species-other" class="cursor-pointer">Others</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Age Filter -->
+                    <div class="relative">
+                        <button id="ageFilterBtn" class="flex items-center justify-between w-full md:w-auto px-4 py-2.5 bg-gray-100 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors">
+                            <span>Age</span>
+                            <i class="ri-arrow-down-s-line ml-2"></i>
+                        </button>
+                        <div id="ageDropdown" class="hidden absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10 p-2">
+                            <div class="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer">
+                                <input type="checkbox" id="age-baby" class="custom-checkbox mr-3">
+                                <label for="age-baby" class="cursor-pointer">Puppy/Kitten</label>
+                            </div>
+                            <div class="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer">
+                                <input type="checkbox" id="age-young" class="custom-checkbox mr-3">
+                                <label for="age-young" class="cursor-pointer">Young</label>
+                            </div>
+                            <div class="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer">
+                                <input type="checkbox" id="age-adult" class="custom-checkbox mr-3">
+                                <label for="age-adult" class="cursor-pointer">Adult</label>
+                            </div>
+                            <div class="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer">
+                                <input type="checkbox" id="age-senior" class="custom-checkbox mr-3">
+                                <label for="age-senior" class="cursor-pointer">Senior</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gender Filter -->
+                    <div class="relative">
+                        <button id="genderFilterBtn" class="flex items-center justify-between w-full md:w-auto px-4 py-2.5 bg-gray-100 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors">
+                            <span>Gender</span>
+                            <i class="ri-arrow-down-s-line ml-2"></i>
+                        </button>
+                        <div id="genderDropdown" class="hidden absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10 p-2">
+                            <div class="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer">
+                                <input type="checkbox" id="gender-male" class="custom-checkbox mr-3">
+                                <label for="gender-male" class="cursor-pointer">Male</label>
+                            </div>
+                            <div class="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer">
+                                <input type="checkbox" id="gender-female" class="custom-checkbox mr-3">
+                                <label for="gender-female" class="cursor-pointer">Female</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Size Filter -->
+                    <div class="relative">
+                        <button id="sizeFilterBtn" class="flex items-center justify-between w-full md:w-auto px-4 py-2.5 bg-gray-100 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors">
+                            <span>Size</span>
+                            <i class="ri-arrow-down-s-line ml-2"></i>
+                        </button>
+                        <div id="sizeDropdown" class="hidden absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10 p-2">
+                            <div class="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer">
+                                <input type="checkbox" id="size-small" class="custom-checkbox mr-3">
+                                <label for="size-small" class="cursor-pointer">Small</label>
+                            </div>
+                            <div class="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer">
+                                <input type="checkbox" id="size-medium" class="custom-checkbox mr-3">
+                                <label for="size-medium" class="cursor-pointer">Medium</label>
+                            </div>
+                            <div class="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer">
+                                <input type="checkbox" id="size-large" class="custom-checkbox mr-3">
+                                <label for="size-large" class="cursor-pointer">Large</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reset Filters Button -->
+                    <button id="resetFilters" class="px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                        <i class="ri-refresh-line mr-1"></i>
+                        Reset Filters
+                    </button>
+                </div>
+
+                <!-- Active Filters Display -->
+                <div id="activeFilters" class="flex flex-wrap mb-2">
+                    <!-- Active filter chips will be added here by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Pet Grid Section -->
+        <section class="py-12">
+            <div class="container mx-auto px-4">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800">Available Pets <span id="petCount" class="text-primary">(15)</span></h2>
+                    <div class="flex items-center">
+                        <label for="sortBy" class="mr-2 text-gray-700">Sort by:</label>
+                        <div class="relative">
+                            <select id="sortBy" class="appearance-none bg-white border border-gray-300 rounded-lg py-2 pl-4 pr-8 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="newest">Newest</option>
+                                <option value="oldest">Oldest</option>
+                                <option value="name-asc">Name (A-Z)</option>
+                                <option value="name-desc">Name (Z-A)</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                <i class="ri-arrow-down-s-line text-gray-500"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pet Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Pet Card 1 -->
+                    <div class="pet-card bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=A%2520close-up%2520portrait%2520of%2520a%2520friendly%2520golden%2520retriever%2520dog%2520with%2520a%2520happy%2520expression%252C%2520soft%2520fur%252C%2520and%2520warm%2520eyes%2520against%2520a%2520simple%2520light%2520background.%2520The%2520image%2520is%2520bright%252C%2520clear%252C%2520and%2520heartwarming%252C%2520perfect%2520for%2520a%2520pet%2520adoption%2520website.&width=600&height=400&seq=101&orientation=landscape" alt="Buddy" class="w-full h-full object-cover object-top">
+                            <span class="absolute top-4 right-4 bg-green-100 text-green-800 text-xs font-medium px-2.5 py-1 rounded">Available</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Buddy</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Golden Retriever</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">2 years</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Male</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Large</span>
+                            </div>
+                            <div class="mb-4">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-1">Personality:</h4>
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Friendly</span>
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Energetic</span>
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Loyal</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <div class="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
+                                <span class="text-sm text-gray-600">Medical history up to date</span>
+                            </div>
+                            <button class="view-pet-details w-full bg-primary text-white py-2.5 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">View Details</button>
+                        </div>
+                    </div>
+
+                    <!-- Pet Card 2 -->
+                    <div class="pet-card bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=A%2520beautiful%2520portrait%2520of%2520a%2520calico%2520cat%2520with%2520striking%2520green%2520eyes%2520and%2520a%2520mix%2520of%2520orange%252C%2520black%252C%2520and%2520white%2520fur%2520patches.%2520The%2520cat%2520has%2520a%2520calm%252C%2520friendly%2520expression%2520and%2520is%2520photographed%2520against%2520a%2520simple%2520light%2520background%2520that%2520matches%2520the%2520previous%2520dog%2520image.&width=600&height=400&seq=102&orientation=landscape" alt="Luna" class="w-full h-full object-cover object-top">
+                            <span class="absolute top-4 right-4 bg-green-100 text-green-800 text-xs font-medium px-2.5 py-1 rounded">Available</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Luna</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Calico Cat</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">1 year</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Female</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Small</span>
+                            </div>
+                            <div class="mb-4">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-1">Personality:</h4>
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Gentle</span>
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Playful</span>
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Affectionate</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <div class="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
+                                <span class="text-sm text-gray-600">Medical history up to date</span>
+                            </div>
+                            <button class="view-pet-details w-full bg-primary text-white py-2.5 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">View Details</button>
+                        </div>
+                    </div>
+
+                    <!-- Pet Card 3 -->
+                    <div class="pet-card bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=A%2520charming%2520portrait%2520of%2520a%2520small%2520black%2520and%2520white%2520border%2520collie%2520puppy%2520with%2520bright%2520eyes%2520and%2520perky%2520ears.%2520The%2520puppy%2520looks%2520playful%2520and%2520alert%252C%2520photographed%2520against%2520the%2520same%2520simple%2520light%2520background%2520as%2520the%2520previous%2520pet%2520images%2520for%2520consistency.&width=600&height=400&seq=103&orientation=landscape" alt="Max" class="w-full h-full object-cover object-top">
+                            <span class="absolute top-4 right-4 bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-1 rounded">Pending</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Max</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Border Collie</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">6 months</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Male</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Medium</span>
+                            </div>
+                            <div class="mb-4">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-1">Personality:</h4>
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Smart</span>
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Energetic</span>
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Trainable</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <div class="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
+                                <span class="text-sm text-gray-600">Medical history up to date</span>
+                            </div>
+                            <button class="view-pet-details w-full bg-primary text-white py-2.5 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">View Details</button>
+                        </div>
+                    </div>
+
+                    <!-- Pet Card 4 -->
+                    <div class="pet-card bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=A%2520beautiful%2520portrait%2520of%2520a%2520gray%2520tabby%2520cat%2520with%2520striking%2520amber%2520eyes%252C%2520relaxed%2520posture%252C%2520and%2520soft%2520fur.%2520The%2520cat%2520has%2520a%2520gentle%252C%2520approachable%2520expression%2520and%2520is%2520photographed%2520against%2520the%2520same%2520simple%2520light%2520background%2520as%2520the%2520other%2520pet%2520images%2520for%2520visual%2520consistency.&width=600&height=400&seq=104&orientation=landscape" alt="Bella" class="w-full h-full object-cover object-top">
+                            <span class="absolute top-4 right-4 bg-green-100 text-green-800 text-xs font-medium px-2.5 py-1 rounded">Available</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Bella</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Tabby Cat</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">3 years</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Female</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Small</span>
+                            </div>
+                            <div class="mb-4">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-1">Personality:</h4>
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Calm</span>
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Independent</span>
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Affectionate</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <div class="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
+                                <span class="text-sm text-gray-600">Medical history up to date</span>
+                            </div>
+                            <button class="view-pet-details w-full bg-primary text-white py-2.5 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">View Details</button>
+                        </div>
+                    </div>
+
+                    <!-- Pet Card 5 -->
+                    <div class="pet-card bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=A%2520portrait%2520of%2520a%2520friendly%2520chocolate%2520labrador%2520retriever%2520with%2520a%2520happy%2520expression%252C%2520warm%2520brown%2520eyes%252C%2520and%2520shiny%2520coat.%2520The%2520dog%2520looks%2520approachable%2520and%2520gentle%252C%2520photographed%2520against%2520a%2520simple%2520light%2520background%2520consistent%2520with%2520the%2520other%2520pet%2520portraits.&width=600&height=400&seq=105&orientation=landscape" alt="Charlie" class="w-full h-full object-cover object-top">
+                            <span class="absolute top-4 right-4 bg-green-100 text-green-800 text-xs font-medium px-2.5 py-1 rounded">Available</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Charlie</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Labrador Retriever</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">4 years</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Male</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Large</span>
+                            </div>
+                            <div class="mb-4">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-1">Personality:</h4>
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Friendly</span>
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Gentle</span>
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Good with kids</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <div class="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
+                                <span class="text-sm text-gray-600">Medical history up to date</span>
+                            </div>
+                            <button class="view-pet-details w-full bg-primary text-white py-2.5 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">View Details</button>
+                        </div>
+                    </div>
+
+                    <!-- Pet Card 6 -->
+                    <div class="pet-card bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=A%2520beautiful%2520portrait%2520of%2520a%2520siamese%2520cat%2520with%2520striking%2520blue%2520eyes%252C%2520cream-colored%2520body%2520with%2520darker%2520points%2520on%2520the%2520face%252C%2520ears%252C%2520paws%2520and%2520tail.%2520The%2520cat%2520has%2520an%2520elegant%2520and%2520poised%2520expression%252C%2520photographed%2520against%2520the%2520same%2520simple%2520light%2520background%2520as%2520the%2520other%2520pet%2520images%2520for%2520consistency.&width=600&height=400&seq=106&orientation=landscape" alt="Oliver" class="w-full h-full object-cover object-top">
+                            <span class="absolute top-4 right-4 bg-green-100 text-green-800 text-xs font-medium px-2.5 py-1 rounded">Available</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Oliver</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Siamese Cat</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">2 years</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Male</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Small</span>
+                            </div>
+                            <div class="mb-4">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-1">Personality:</h4>
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Vocal</span>
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Intelligent</span>
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Social</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <div class="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
+                                <span class="text-sm text-gray-600">Medical history up to date</span>
+                            </div>
+                            <button class="view-pet-details w-full bg-primary text-white py-2.5 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">View Details</button>
+                        </div>
+                    </div>
+
+                    <!-- Pet Card 7 -->
+                    <div class="pet-card bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=A%2520portrait%2520of%2520a%2520beagle%2520dog%2520with%2520classic%2520tricolor%2520coat%2520of%2520white%252C%2520black%2520and%2520brown%252C%2520floppy%2520ears%252C%2520and%2520a%2520friendly%2520expression.%2520The%2520beagle%2520has%2520bright%2520eyes%2520and%2520looks%2520alert%2520and%2520happy%252C%2520photographed%2520against%2520a%2520simple%2520light%2520background%2520consistent%2520with%2520the%2520other%2520pet%2520portraits.&width=600&height=400&seq=107&orientation=landscape" alt="Daisy" class="w-full h-full object-cover object-top">
+                            <span class="absolute top-4 right-4 bg-green-100 text-green-800 text-xs font-medium px-2.5 py-1 rounded">Available</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Daisy</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Beagle</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">3 years</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Female</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Medium</span>
+                            </div>
+                            <div class="mb-4">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-1">Personality:</h4>
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Curious</span>
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Friendly</span>
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Playful</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <div class="w-4 h-4 rounded-full bg-yellow-500 mr-2"></div>
+                                <span class="text-sm text-gray-600">Medical treatment in progress</span>
+                            </div>
+                            <button class="view-pet-details w-full bg-primary text-white py-2.5 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">View Details</button>
+                        </div>
+                    </div>
+
+                    <!-- Pet Card 8 -->
+                    <div class="pet-card bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=A%2520portrait%2520of%2520a%2520Maine%2520Coon%2520cat%2520with%2520long%252C%2520fluffy%2520fur%252C%2520large%2520tufted%2520ears%252C%2520and%2520an%2520impressive%2520bushy%2520tail.%2520The%2520cat%2520has%2520a%2520majestic%2520yet%2520gentle%2520expression%252C%2520photographed%2520against%2520the%2520same%2520simple%2520light%2520background%2520as%2520the%2520other%2520pet%2520images%2520for%2520consistency.&width=600&height=400&seq=108&orientation=landscape" alt="Leo" class="w-full h-full object-cover object-top">
+                            <span class="absolute top-4 right-4 bg-green-100 text-green-800 text-xs font-medium px-2.5 py-1 rounded">Available</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Leo</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Maine Coon</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">4 years</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Male</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Large</span>
+                            </div>
+                            <div class="mb-4">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-1">Personality:</h4>
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Gentle</span>
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Friendly</span>
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Dignified</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <div class="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
+                                <span class="text-sm text-gray-600">Medical history up to date</span>
+                            </div>
+                            <button class="view-pet-details w-full bg-primary text-white py-2.5 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">View Details</button>
+                        </div>
+                    </div>
+
+                    <!-- Pet Card 9 -->
+                    <div class="pet-card bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=A%2520portrait%2520of%2520a%2520small%2520white%2520and%2520tan%2520Shih%2520Tzu%2520dog%2520with%2520long%2520silky%2520fur%252C%2520a%2520sweet%2520face%2520with%2520dark%2520eyes%252C%2520and%2520a%2520friendly%2520expression.%2520The%2520dog%2520looks%2520well-groomed%2520and%2520adorable%252C%2520photographed%2520against%2520a%2520simple%2520light%2520background%2520consistent%2520with%2520the%2520other%2520pet%2520portraits.&width=600&height=400&seq=109&orientation=landscape" alt="Sophie" class="w-full h-full object-cover object-top">
+                            <span class="absolute top-4 right-4 bg-green-100 text-green-800 text-xs font-medium px-2.5 py-1 rounded">Available</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Sophie</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Shih Tzu</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">5 years</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Female</span>
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full">Small</span>
+                            </div>
+                            <div class="mb-4">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-1">Personality:</h4>
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Affectionate</span>
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Loyal</span>
+                                    <span class="bg-primary/10 text-primary text-xs px-2 py-0.5 rounded">Calm</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <div class="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
+                                <span class="text-sm text-gray-600">Medical history up to date</span>
+                            </div>
+                            <button class="view-pet-details w-full bg-primary text-white py-2.5 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Load More Button -->
+                <div class="text-center mt-12">
+                    <button id="loadMoreBtn" class="bg-white border border-primary text-primary px-6 py-3 !rounded-button font-semibold hover:bg-primary hover:text-white transition-colors whitespace-nowrap">
+                        Load More Pets
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pet Details Modal -->
+    <div id="petDetailsModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div class="pet-card-expanded bg-white rounded-lg shadow-xl overflow-hidden">
+            <div class="flex justify-end p-4 border-b">
+                <button id="closeModalBtn" class="text-gray-500 hover:text-gray-700">
+                    <i class="ri-close-line ri-lg"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto max-h-[80vh]">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Pet Images Gallery -->
+                    <div>
+                        <div class="mb-4 h-64 md:h-80 overflow-hidden rounded-lg">
+                            <img id="mainPetImage" src="https://readdy.ai/api/search-image?query=A%2520close-up%2520portrait%2520of%2520a%2520friendly%2520golden%2520retriever%2520dog%2520with%2520a%2520happy%2520expression%252C%2520soft%2520fur%252C%2520and%2520warm%2520eyes%2520against%2520a%2520simple%2520light%2520background.%2520The%2520image%2520is%2520bright%252C%2520clear%252C%2520and%2520heartwarming%252C%2520perfect%2520for%2520a%2520pet%2520adoption%2520website.&width=600&height=400&seq=101&orientation=landscape" alt="Buddy" class="w-full h-full object-cover object-top rounded-lg">
+                        </div>
+                        <div class="grid grid-cols-4 gap-2">
+                            <div class="h-20 overflow-hidden rounded cursor-pointer pet-thumbnail active">
+                                <img src="https://readdy.ai/api/search-image?query=A%2520close-up%2520portrait%2520of%2520a%2520friendly%2520golden%2520retriever%2520dog%2520with%2520a%2520happy%2520expression%252C%2520soft%2520fur%252C%2520and%2520warm%2520eyes%2520against%2520a%2520simple%2520light%2520background.%2520The%2520image%2520is%2520bright%252C%2520clear%252C%2520and%2520heartwarming%252C%2520perfect%2520for%2520a%2520pet%2520adoption%2520website.&width=600&height=400&seq=101&orientation=landscape" alt="Buddy 1" class="w-full h-full object-cover object-top">
+                            </div>
+                            <div class="h-20 overflow-hidden rounded cursor-pointer pet-thumbnail">
+                                <img src="https://readdy.ai/api/search-image?query=A%2520golden%2520retriever%2520dog%2520playing%2520with%2520a%2520ball%2520in%2520a%2520grassy%2520area%252C%2520showing%2520its%2520playful%2520and%2520energetic%2520nature.%2520The%2520dog%2520looks%2520happy%2520and%2520active%252C%2520demonstrating%2520its%2520friendly%2520personality%2520and%2520love%2520for%2520play.&width=600&height=400&seq=110&orientation=landscape" alt="Buddy 2" class="w-full h-full object-cover object-top">
+                            </div>
+                            <div class="h-20 overflow-hidden rounded cursor-pointer pet-thumbnail">
+                                <img src="https://readdy.ai/api/search-image?query=A%2520golden%2520retriever%2520dog%2520relaxing%2520indoors%2520on%2520a%2520comfortable%2520dog%2520bed%252C%2520showing%2520its%2520calm%2520and%2520gentle%2520nature.%2520The%2520dog%2520looks%2520content%2520and%2520at%2520ease%2520in%2520a%2520home%2520environment%252C%2520demonstrating%2520how%2520well%2520it%2520adapts%2520to%2520indoor%2520living.&width=600&height=400&seq=111&orientation=landscape" alt="Buddy 3" class="w-full h-full object-cover object-top">
+                            </div>
+                            <div class="h-20 overflow-hidden rounded cursor-pointer pet-thumbnail">
+                                <img src="https://readdy.ai/api/search-image?query=A%2520golden%2520retriever%2520dog%2520interacting%2520gently%2520with%2520a%2520child%252C%2520showing%2520its%2520patient%2520and%2520kind%2520nature.%2520The%2520scene%2520demonstrates%2520the%2520dog%2527s%2520good%2520behavior%2520around%2520children%2520and%2520family-friendly%2520temperament.&width=600&height=400&seq=112&orientation=landscape" alt="Buddy 4" class="w-full h-full object-cover object-top">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pet Details -->
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h2 class="text-3xl font-bold text-gray-800">Buddy</h2>
+                                <p class="text-gray-600">Golden Retriever • 2 years • Male • Large</p>
+                            </div>
+                            <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded">Available</span>
+                        </div>
+
+                        <div class="mb-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">About Buddy</h3>
+                            <p class="text-gray-700 mb-4">Buddy is a friendly and energetic Golden Retriever who loves to play fetch and go for long walks. He's great with children and other dogs, making him perfect for an active family. Buddy is house-trained and knows basic commands like sit, stay, and come.</p>
+                            <p class="text-gray-700">He was rescued from a high-kill shelter three months ago and has been thriving in our care. Buddy is looking for a forever home with a family who can give him plenty of exercise and attention.</p>
+                        </div>
+
+                        <div class="mb-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Personality</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-primary/10 text-primary px-3 py-1 rounded-full">Friendly</span>
+                                <span class="bg-primary/10 text-primary px-3 py-1 rounded-full">Energetic</span>
+                                <span class="bg-primary/10 text-primary px-3 py-1 rounded-full">Loyal</span>
+                                <span class="bg-primary/10 text-primary px-3 py-1 rounded-full">Intelligent</span>
+                                <span class="bg-primary/10 text-primary px-3 py-1 rounded-full">Playful</span>
+                                <span class="bg-primary/10 text-primary px-3 py-1 rounded-full">Good with kids</span>
+                                <span class="bg-primary/10 text-primary px-3 py-1 rounded-full">Good with other dogs</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Medical History</h3>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                <li>Neutered</li>
+                                <li>Vaccinations up to date</li>
+                                <li>Microchipped</li>
+                                <li>Regular check-ups completed</li>
+                                <li>No known health issues</li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Care Requirements</h3>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                <li>Regular exercise (at least 1 hour daily)</li>
+                                <li>Grooming: Brushing 2-3 times weekly</li>
+                                <li>Diet: High-quality dog food, 2 cups twice daily</li>
+                                <li>Needs a secure yard or regular walks</li>
+                                <li>Thrives on mental stimulation and training</li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Adoption Fee</h3>
+                            <p class="text-gray-700">$250 (includes neutering, vaccinations, microchip, and initial supplies)</p>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button id="applyToAdoptBtn" class="bg-primary text-white py-3 px-6 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap flex-1">Apply to Adopt Buddy</button>
+                            <a href="https://readdy.ai/home/381154d3-f87d-42ab-a3d6-b144fc51f0ad/6fa6643d-b172-4fe3-9884-8072c4a23cb9" data-readdy="true" class="bg-white border border-primary text-primary py-3 px-6 !rounded-button font-medium hover:bg-primary hover:text-white transition-colors whitespace-nowrap text-center">Back to Main Page</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adoption Application Form Modal -->
+    <div id="adoptionFormModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center p-6 border-b">
+                <h2 class="text-2xl font-bold text-gray-800">Adoption Application</h2>
+                <button id="closeFormBtn" class="text-gray-500 hover:text-gray-700">
+                    <i class="ri-close-line ri-lg"></i>
+                </button>
+            </div>
+            <form id="adoptionForm" class="p-6">
+                <!-- Personal Information Section -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Personal Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="firstName" class="block text-gray-700 mb-1">First Name *</label>
+                            <input type="text" id="firstName" required class="w-full px-4 py-2 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none">
+                        </div>
+                        <div>
+                            <label for="lastName" class="block text-gray-700 mb-1">Last Name *</label>
+                            <input type="text" id="lastName" required class="w-full px-4 py-2 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-700 mb-1">Email Address *</label>
+                            <input type="email" id="email" required class="w-full px-4 py-2 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-gray-700 mb-1">Phone Number *</label>
+                            <input type="tel" id="phone" required class="w-full px-4 py-2 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="address" class="block text-gray-700 mb-1">Home Address *</label>
+                            <input type="text" id="address" required class="w-full px-4 py-2 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none">
+                        </div>
+                        <div>
+                            <label for="city" class="block text-gray-700 mb-1">City *</label>
+                            <input type="text" id="city" required class="w-full px-4 py-2 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none">
+                        </div>
+                        <div>
+                            <label for="zipCode" class="block text-gray-700 mb-1">ZIP Code *</label>
+                            <input type="text" id="zipCode" required class="w-full px-4 py-2 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Living Situation Section -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Living Situation</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="housingType" class="block text-gray-700 mb-1">Housing Type *</label>
+                            <select id="housingType" required class="w-full px-4 py-2 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none appearance-none pr-8">
+                                <option value="">Select housing type</option>
+                                <option value="house">House</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="condo">Condo</option>
+                                <option value="townhouse">Townhouse</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                    <i class="ri-arrow-down-s-line text-gray-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="ownRent" class="block text-gray-700 mb-1">Do you own or rent? *</label>
+                            <select id="ownRent" required class="w-full px-4 py-2 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none appearance-none pr-8">
+                                <option value="">Select option</option>
+                                <option value="own">Own</option>
+                                <option value="rent">Rent</option>
+                            </select>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                    <i class="ri-arrow-down-s-line text-gray-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="yard" class="block text-gray-700 mb-1">Do you have a yard? *</label>
+                            <select id="yard" required class="w-full px-4 py-2 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none appearance-none pr-8">
+                                <option value="">Select option</option>
+                                <option value="yes-fenced">Yes, fenced</option>
+                                <option value="yes-unfenced">Yes, unfenced</option>
+                                <option value="no">No</option>
+                            </select>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                    <i class="ri-arrow-down-s-line text-gray-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="children" class="block text-gray-700 mb-1">Children in the home? *</label>
+                            <select id="children" required class="w-full px-4 py-2 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none appearance-none pr-8">
+                                <option value="">Select option</option>
+                                <option value="no">No</option>
+                                <option value="yes-under5">Yes, under 5 years</option>
+                                <option value="yes-5to12">Yes, 5-12 years</option>
+                                <option value="yes-13to18">Yes, 13-18 years</option>
+                                <option value="yes-mixed">Yes, mixed ages</option>
+                            </select>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                    <i class="ri-arrow-down-s-line text-gray-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="otherPets" class="block text-gray-700 mb-1">Other pets in the home? *</label>
+                            <textarea id="otherPets" rows="3" required class="w-full px-4 py-2 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none" placeholder="Please list any other pets you currently have, including species, breed, age, and whether they're spayed/neutered."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pet Care Experience Section -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Pet Care Experience</h3>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div>
+                            <label for="petExperience" class="block text-gray-700 mb-1">Previous pet ownership experience *</label>
+                            <select id="petExperience" required class="w-full px-4 py-2 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none appearance-none pr-8">
+                                <option value="">Select option</option>
+                                <option value="first-time">First-time pet owner</option>
+                                <option value="had-before">Had pets before but not currently</option>
+                                <option value="current-owner">Current pet owner</option>
+                                <option value="experienced">Experienced with multiple pets</option>
+                            </select>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                    <i class="ri-arrow-down-s-line text-gray-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="hoursAlone" class="block text-gray-700 mb-1">Hours pet will be alone per day *</label>
+                            <select id="hoursAlone" required class="w-full px-4 py-2 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none appearance-none pr-8">
+                                <option value="">Select option</option>
+                                <option value="0-2">0-2 hours</option>
+                                <option value="3-5">3-5 hours</option>
+                                <option value="6-8">6-8 hours</option>
+                                <option value="8+">More than 8 hours</option>
+                            </select>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                    <i class="ri-arrow-down-s-line text-gray-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="activityLevel" class="block text-gray-700 mb-1">Your activity level *</label>
+                            <select id="activityLevel" required class="w-full px-4 py-2 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none appearance-none pr-8">
+                                <option value="">Select option</option>
+                                <option value="sedentary">Sedentary</option>
+                                <option value="moderate">Moderately active</option>
+                                <option value="active">Active</option>
+                                <option value="very-active">Very active</option>
+                            </select>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                    <i class="ri-arrow-down-s-line text-gray-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="adoptionReason" class="block text-gray-700 mb-1">Why do you want to adopt this pet? *</label>
+                            <textarea id="adoptionReason" rows="3" required class="w-full px-4 py-2 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none" placeholder="Please explain why you're interested in adopting this specific pet and what you're looking for in a companion."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Veterinary Reference Section -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Veterinary Reference</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="vetName" class="block text-gray-700 mb-1">Veterinarian Name</label>
+                            <input type="text" id="vetName" class="w-full px-4 py-2 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none">
+                            <p class="text-sm text-gray-500 mt-1">If you have a current vet</p>
+                        </div>
+                        <div>
+                            <label for="vetPhone" class="block text-gray-700 mb-1">Veterinarian Phone</label>
+                            <input type="tel" id="vetPhone" class="w-full px-4 py-2 border-none rounded-lg bg-gray-100 focus:ring-2 focus:ring-primary text-gray-700 outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Agreement Section -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Agreement</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-start">
+                            <input type="checkbox" id="homeVisit" required class="custom-checkbox mt-1 mr-3">
+                            <label for="homeVisit" class="text-gray-700">I agree to a home visit as part of the adoption process. *</label>
+                        </div>
+                        <div class="flex items-start">
+                            <input type="checkbox" id="truthfulInfo" required class="custom-checkbox mt-1 mr-3">
+                            <label for="truthfulInfo" class="text-gray-700">I certify that all information provided is truthful and accurate. *</label>
+                        </div>
+                        <div class="flex items-start">
+                            <input type="checkbox" id="adoptionFee" required class="custom-checkbox mt-1 mr-3">
+                            <label for="adoptionFee" class="text-gray-700">I understand there is an adoption fee that helps cover the cost of care for the animals. *</label>
+                        </div>
+                        <div class="flex items-start">
+                            <input type="checkbox" id="petCare" required class="custom-checkbox mt-1 mr-3">
+                            <label for="petCare" class="text-gray-700">I am prepared to provide proper care, nutrition, exercise, and veterinary treatment for this pet throughout its life. *</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-primary text-white px-8 py-3 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">Submit Application</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Message Modal -->
+    <div id="successModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6 text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="ri-check-line ri-2x text-green-500"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Application Submitted!</h2>
+            <p class="text-gray-700 mb-6">Thank you for your interest in adopting. We'll review your application and contact you within 2-3 business days.</p>
+            <button id="closeSuccessBtn" class="bg-primary text-white px-6 py-2.5 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">Close</button>
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Pet Adoption</h3>
+                    <p class="text-gray-300 mb-4">We're dedicated to finding loving homes for animals in need and supporting pet owners in our community.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="ri-facebook-fill ri-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="ri-instagram-line ri-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="ri-twitter-x-line ri-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="ri-youtube-line ri-lg"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="adoptpage.html" class="text-gray-300 hover:text-white transition-colors">Available Pets</a></li>
+                        <li><a href="adoptpage.html" class="text-gray-300 hover:text-white transition-colors">Adoption Process</a></li>
+                        <li><a href="donatepage.html" class="text-gray-300 hover:text-white transition-colors">Donation Options</a></li>
+                        <li><a href="volunteerpage.html" class="text-gray-300 hover:text-white transition-colors">Volunteer Opportunities</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Success Stories</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="ri-map-pin-line ri-lg mr-2 mt-1"></i>
+                            <span>Danavaipata,Rajahmundry</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="ri-phone-line ri-lg mr-2 mt-1"></i>
+                            <span>6304359424</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="ri-mail-line ri-lg mr-2 mt-1"></i>
+                            <span>petadoption@gmail.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="ri-time-line ri-lg mr-2 mt-1"></i>
+                            <span>Open daily: 10am - 6pm</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Emergency</h3>
+                    <p class="text-gray-300 mb-2">24/7 Animal Rescue Hotline:</p>
+                    <p class="text-xl font-bold text-secondary mb-4">+91 6382493541</p>
+                    <p class="text-gray-300 mb-2">For injured or distressed animals requiring immediate assistance.</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-6 mt-6">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 Pet Adoption. All rights reserved.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Accessibility</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script id="mobileMenuScript">
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuButton = document.querySelector('.ri-menu-line').parentElement;
+            const nav = document.querySelector('nav');
+            
+            menuButton.addEventListener('click', function() {
+                if (nav.classList.contains('hidden')) {
+                    nav.classList.remove('hidden');
+                    nav.classList.add('flex', 'flex-col', 'absolute', 'top-16', 'left-0', 'right-0', 'bg-white', 'shadow-md', 'p-4', 'space-y-4', 'z-50');
+                    menuButton.innerHTML = '<i class="ri-close-line ri-lg"></i>';
+                } else {
+                    nav.classList.add('hidden');
+                    nav.classList.remove('flex', 'flex-col', 'absolute', 'top-16', 'left-0', 'right-0', 'bg-white', 'shadow-md', 'p-4', 'space-y-4', 'z-50');
+                    menuButton.innerHTML = '<i class="ri-menu-line ri-lg"></i>';
+                }
+            });
+            
+            // Close menu when window is resized to desktop size
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 768) {
+                    nav.classList.remove('flex', 'flex-col', 'absolute', 'top-16', 'left-0', 'right-0', 'bg-white', 'shadow-md', 'p-4', 'space-y-4', 'z-50');
+                    nav.classList.add('hidden', 'md:flex');
+                    menuButton.innerHTML = '<i class="ri-menu-line ri-lg"></i>';
+                }
+            });
+        });
+    </script>
+
+    <script id="filterScript">
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter dropdown toggles
+            const filterButtons = [
+                { btn: document.getElementById('speciesFilterBtn'), dropdown: document.getElementById('speciesDropdown') },
+                { btn: document.getElementById('ageFilterBtn'), dropdown: document.getElementById('ageDropdown') },
+                { btn: document.getElementById('genderFilterBtn'), dropdown: document.getElementById('genderDropdown') },
+                { btn: document.getElementById('sizeFilterBtn'), dropdown: document.getElementById('sizeDropdown') }
+            ];
+
+            // Close all dropdowns
+            function closeAllDropdowns() {
+                filterButtons.forEach(item => {
+                    item.dropdown.classList.add('hidden');
+                });
+            }
+
+            // Add click event listeners to filter buttons
+            filterButtons.forEach(item => {
+                item.btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const isHidden = item.dropdown.classList.contains('hidden');
+                    
+                    closeAllDropdowns();
+                    
+                    if (isHidden) {
+                        item.dropdown.classList.remove('hidden');
+                    }
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function() {
+                closeAllDropdowns();
+            });
+
+            // Prevent dropdown from closing when clicking inside
+            document.querySelectorAll('.dropdown-content').forEach(dropdown => {
+                dropdown.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
+
+            // Active filters display
+            const activeFiltersContainer = document.getElementById('activeFilters');
+            const checkboxes = document.querySelectorAll('.custom-checkbox');
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    updateActiveFilters();
+                });
+            });
+
+            function updateActiveFilters() {
+                // Clear current filters
+                activeFiltersContainer.innerHTML = '';
+                
+                // Add chips for checked filters
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        const label = document.querySelector(`label[for="${checkbox.id}"]`).textContent;
+                        const filterType = checkbox.id.split('-')[0];
+                        
+                        const chip = document.createElement('div');
+                        chip.className = 'filter-chip';
+                        chip.innerHTML = `
+                            <span>${label}</span>
+                            <button type="button" data-filter="${checkbox.id}" aria-label="Remove filter">
+                                <i class="ri-close-line"></i>
+                            </button>
+                        `;
+                        
+                        activeFiltersContainer.appendChild(chip);
+                        
+                        // Add click event to remove button
+                        chip.querySelector('button').addEventListener('click', function() {
+                            const filterId = this.getAttribute('data-filter');
+                            document.getElementById(filterId).checked = false;
+                            updateActiveFilters();
+                        });
+                    }
+                });
+            }
+
+            // Reset filters button
+            document.getElementById('resetFilters').addEventListener('click', function() {
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                updateActiveFilters();
+            });
+        });
+    </script>
+
+    <script id="petDetailsScript">
+        document.addEventListener('DOMContentLoaded', function() {
+            const petCards = document.querySelectorAll('.pet-card');
+            const petDetailsModal = document.getElementById('petDetailsModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const applyToAdoptBtn = document.getElementById('applyToAdoptBtn');
+            const adoptionFormModal = document.getElementById('adoptionFormModal');
+            const closeFormBtn = document.getElementById('closeFormBtn');
+            const adoptionForm = document.getElementById('adoptionForm');
+            const successModal = document.getElementById('successModal');
+            const closeSuccessBtn = document.getElementById('closeSuccessBtn');
+            
+            // Open pet details modal
+            petCards.forEach(card => {
+                const viewDetailsBtn = card.querySelector('.view-pet-details');
+                if (viewDetailsBtn) {
+                    viewDetailsBtn.addEventListener('click', function() {
+                        petDetailsModal.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden';
+                    });
+                }
+            });
+            
+            // Close pet details modal
+            closeModalBtn.addEventListener('click', function() {
+                petDetailsModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Open adoption form modal
+            applyToAdoptBtn.addEventListener('click', function() {
+                petDetailsModal.classList.add('hidden');
+                adoptionFormModal.classList.remove('hidden');
+            });
+            
+            // Close adoption form modal
+            closeFormBtn.addEventListener('click', function() {
+                adoptionFormModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Handle form submission
+            adoptionForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                adoptionFormModal.classList.add('hidden');
+                successModal.classList.remove('hidden');
+            });
+            
+            // Close success modal
+            closeSuccessBtn.addEventListener('click', function() {
+                successModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Pet image gallery in modal
+            const mainPetImage = document.getElementById('mainPetImage');
+            const thumbnails = document.querySelectorAll('.pet-thumbnail');
+            
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', function() {
+                    // Update main image
+                    mainPetImage.src = this.querySelector('img').src;
+                    
+                    // Update active thumbnail
+                    thumbnails.forEach(t => t.classList.remove('ring-2', 'ring-primary'));
+                    this.classList.add('ring-2', 'ring-primary');
+                });
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target === petDetailsModal) {
+                    petDetailsModal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }
+                if (e.target === adoptionFormModal) {
+                    adoptionFormModal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }
+                if (e.target === successModal) {
+                    successModal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script>
+
+    <script id="loadMoreScript">
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            
+            loadMoreBtn.addEventListener('click', function() {
+                // In a real application, this would load more pets from the server
+                // For this demo, we'll just show a message
+                loadMoreBtn.textContent = 'No more pets to load';
+                loadMoreBtn.disabled = true;
+                loadMoreBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            });
+        });
+    </script>
+</body>
+</html>

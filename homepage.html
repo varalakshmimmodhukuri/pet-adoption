@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paws & Hearts | Pet Adoption & Rescue</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#8B4FB3',secondary:'#FF7F50',accent:'#98FF98'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Open Sans', sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+font-family: 'Poppins', sans-serif;
+}
+.logo-font {
+font-family: 'Pacifico', serif;
+}
+
+.custom-checkbox {
+appearance: none;
+width: 1.25rem;
+height: 1.25rem;
+border: 2px solid #8d51b4;
+border-radius: 4px;
+position: relative;
+cursor: pointer;
+outline: none;
+}
+.custom-checkbox:checked {
+background-color: #8B4FB3;
+}
+.custom-checkbox:checked::after {
+content: '';
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+width: 0.5rem;
+height: 0.5rem;
+border-radius: 1px;
+background-color: white;
+}
+.custom-radio {
+appearance: none;
+width: 1.25rem;
+height: 1.25rem;
+border: 2px solid #8B4FB3;
+border-radius: 50%;
+position: relative;
+cursor: pointer;
+outline: none;
+}
+.custom-radio:checked {
+border-color: #8B4FB3;
+}
+.custom-radio:checked::after {
+content: '';
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+width: 0.625rem;
+height: 0.625rem;
+border-radius: 50%;
+background-color: #8B4FB3;
+}
+.custom-switch {
+position: relative;
+display: inline-block;
+width: 3rem;
+height: 1.5rem;
+}
+.custom-switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+.slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #ccc;
+transition: .4s;
+border-radius: 1.5rem;
+}
+.slider:before {
+position: absolute;
+content: "";
+height: 1.1rem;
+width: 1.1rem;
+left: 0.2rem;
+bottom: 0.2rem;
+background-color: white;
+transition: .4s;
+border-radius: 50%;
+}
+input:checked + .slider {
+background-color: #8B4FB3;
+}
+input:checked + .slider:before {
+transform: translateX(1.5rem);
+}
+.custom-range {
+-webkit-appearance: none;
+width: 100%;
+height: 0.5rem;
+border-radius: 0.25rem;
+background: #e2e8f0;
+outline: none;
+}
+.custom-range::-webkit-slider-thumb {
+-webkit-appearance: none;
+appearance: none;
+width: 1.25rem;
+height: 1.25rem;
+border-radius: 50%;
+background: #8B4FB3;
+cursor: pointer;
+}
+.custom-range::-moz-range-thumb {
+width: 1.25rem;
+height: 1.25rem;
+border-radius: 50%;
+background: #8B4FB3;
+cursor: pointer;
+border: none;
+}
+.tab-active {
+background-color: #8B4FB3;
+color: white;
+}
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<header class="bg-white shadow-sm sticky top-0 z-50">
+<div class="container mx-auto px-4 py-3 flex items-center justify-between">
+<a href="#" class="flex items-center">
+<span class="logo-font text-primary text-2xl font-bold">Pet Adoption</span>
+</a>
+<nav class="hidden md:flex items-center space-x-6">
+<a href="homepage.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Home</a>
+<a href="adoptpage.html" data-readdy="true" class="text-gray-800 hover:text-primary font-medium transition-colors">Adopt</a>
+<a href="donatepage.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Donate</a>
+<a href="volunteerpage.html" class="text-gray-800 hover:text-primary font-medium transition-colors">Volunteer</a>
+<a href="aboutuspage.html" class="text-gray-800 hover:text-primary font-medium transition-colors">About Us</a>
+</nav>
+
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-transparent"></div>
+<div class="relative h-[600px] bg-cover bg-center" style="background-image: url('https://readdy.ai/api/search-image?query=A%20heartwarming%20scene%20of%20happy%20pets%20being%20adopted%2C%20featuring%20a%20diverse%20group%20of%20dogs%20and%20cats%20with%20their%20new%20owners.%20The%20image%20shows%20joyful%20interactions%20between%20humans%20and%20animals%20in%20a%20bright%2C%20welcoming%20shelter%20environment%20with%20soft%20lighting.%20The%20left%20side%20has%20a%20gradient%20purple%20background%20that%20smoothly%20transitions%20to%20the%20scene%2C%20creating%20a%20perfect%20backdrop%20for%20text%20overlay.&width=1600&height=800&seq=1&orientation=landscape');">
+<div class="container mx-auto px-4 h-full flex items-center">
+<div class="w-full max-w-2xl text-white">
+<h1 class="text-5xl font-bold mb-4 leading-tight">Find Your Perfect Companion</h1>
+<p class="text-xl mb-8">Every pet deserves a loving home. Adopt, don't shop - and change both your lives forever.</p>
+<div class="flex flex-wrap gap-4">
+<a href="adoptpage.html" class="bg-white text-primary px-6 py-3 !rounded-button font-semibold hover:bg-gray-100 transition-colors whitespace-nowrap">Adopt a Pet</a>
+<a href="donatepage.html" class="bg-secondary text-white px-6 py-3 !rounded-button font-semibold hover:bg-opacity-90 transition-colors whitespace-nowrap">Donate Now</a>
+<a href="volunteerpage.html" class="bg-transparent border-2 border-white text-white px-6 py-3 !rounded-button font-semibold hover:bg-white/10 transition-colors whitespace-nowrap">Volunteer</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Pets Section -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold text-gray-800 mb-3">Meet Our Adorable Friends</h2>
+<p class="text-gray-600 max-w-2xl mx-auto">These loving companions are waiting for their forever homes. Could you be their perfect match?</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Pet Card 1 -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-[1.02]">
+<div class="h-64 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=A%20close-up%20portrait%20of%20a%20friendly%20golden%20retriever%20dog%20with%20a%20happy%20expression%2C%20soft%20fur%2C%20and%20warm%20eyes%20against%20a%20simple%20light%20background.%20The%20image%20is%20bright%2C%20clear%2C%20and%20heartwarming%2C%20perfect%20for%20a%20pet%20adoption%20website.&width=600&height=400&seq=2&orientation=landscape" alt="Buddy" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-5">
+<div class="flex justify-between items-center mb-3">
+<h3 class="text-xl font-semibold text-gray-800">Buddy</h3>
+<span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Available</span>
+</div>
+<p class="text-gray-600 mb-4">Golden Retriever • 2 years • Male</p>
+<p class="text-gray-700 mb-4">Buddy is a friendly, energetic dog who loves to play fetch and go for long walks.</p>
+<a href="#" class="block w-full bg-primary text-white text-center py-2 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">Meet Buddy</a>
+</div>
+</div>
+<!-- Pet Card 2 -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-[1.02]">
+<div class="h-64 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=A%20beautiful%20portrait%20of%20a%20calico%20cat%20with%20striking%20green%20eyes%20and%20a%20mix%20of%20orange%2C%20black%2C%20and%20white%20fur%20patches.%20The%20cat%20has%20a%20calm%2C%20friendly%20expression%20and%20is%20photographed%20against%20a%20simple%20light%20background%20that%20matches%20the%20previous%20dog%20image.&width=600&height=400&seq=3&orientation=landscape" alt="Luna" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-5">
+<div class="flex justify-between items-center mb-3">
+<h3 class="text-xl font-semibold text-gray-800">Luna</h3>
+<span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Available</span>
+</div>
+<p class="text-gray-600 mb-4">Calico Cat • 1 year • Female</p>
+<p class="text-gray-700 mb-4">Luna is a sweet, gentle cat who enjoys cuddles and playing with string toys.</p>
+<a href="#" class="block w-full bg-primary text-white text-center py-2 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">Meet Luna</a>
+</div>
+</div>
+<!-- Pet Card 3 -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-[1.02]">
+<div class="h-64 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=A%20charming%20portrait%20of%20a%20small%20black%20and%20white%20border%20collie%20puppy%20with%20bright%20eyes%20and%20perky%20ears.%20The%20puppy%20looks%20playful%20and%20alert%2C%20photographed%20against%20the%20same%20simple%20light%20background%20as%20the%20previous%20pet%20images%20for%20consistency.&width=600&height=400&seq=4&orientation=landscape" alt="Max" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-5">
+<div class="flex justify-between items-center mb-3">
+<h3 class="text-xl font-semibold text-gray-800">Max</h3>
+<span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded">Pending</span>
+</div>
+<p class="text-gray-600 mb-4">Border Collie • 6 months • Male</p>
+<p class="text-gray-700 mb-4">Max is a smart, energetic puppy who loves to learn new tricks and play with toys.</p>
+<a href="#" class="block w-full bg-gray-300 text-gray-700 text-center py-2 !rounded-button font-medium cursor-not-allowed whitespace-nowrap">Application Pending</a>
+</div>
+</div>
+<!-- Pet Card 4 -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-[1.02]">
+<div class="h-64 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=A%20beautiful%20portrait%20of%20a%20gray%20tabby%20cat%20with%20striking%20amber%20eyes%2C%20relaxed%20posture%2C%20and%20soft%20fur.%20The%20cat%20has%20a%20gentle%2C%20approachable%20expression%20and%20is%20photographed%20against%20the%20same%20simple%20light%20background%20as%20the%20other%20pet%20images%20for%20visual%20consistency.&width=600&height=400&seq=5&orientation=landscape" alt="Bella" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-5">
+<div class="flex justify-between items-center mb-3">
+<h3 class="text-xl font-semibold text-gray-800">Bella</h3>
+<span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Available</span>
+</div>
+<p class="text-gray-600 mb-4">Tabby Cat • 3 years • Female</p>
+<p class="text-gray-700 mb-4">Bella is a calm, independent cat who enjoys lounging in sunny spots and gentle petting.</p>
+<a href="#" class="block w-full bg-primary text-white text-center py-2 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">Meet Bella</a>
+</div>
+</div>
+</div>
+<div class="text-center mt-10">
+<a href="#" class="inline-block bg-white border border-primary text-primary px-6 py-3 !rounded-button font-semibold hover:bg-primary hover:text-white transition-colors whitespace-nowrap">View All Available Pets</a>
+</div>
+</div>
+</section>
+<!-- Adoption Process Section -->
+<section class="py-16 bg-gray-50">
+<div class="container mx-auto px-4">
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold text-gray-800 mb-3">How Adoption Works</h2>
+<p class="text-gray-600 max-w-2xl mx-auto">Our simple 4-step process helps match the right pet with the right family.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- Step 1 -->
+<div class="bg-white p-6 rounded-lg shadow-md text-center">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+<i class="ri-search-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-semibold text-gray-800 mb-3">1. Browse</h3>
+<p class="text-gray-600">Look through our available pets and find one that matches your lifestyle.</p>
+</div>
+<!-- Step 2 -->
+<div class="bg-white p-6 rounded-lg shadow-md text-center">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+<i class="ri-file-list-3-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-semibold text-gray-800 mb-3">2. Apply</h3>
+<p class="text-gray-600">Fill out our adoption application to help us understand your home environment.</p>
+</div>
+<!-- Step 3 -->
+<div class="bg-white p-6 rounded-lg shadow-md text-center">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+<i class="ri-heart-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-semibold text-gray-800 mb-3">3. Meet</h3>
+<p class="text-gray-600">Visit our shelter to meet your potential new family member in person.</p>
+</div>
+<!-- Step 4 -->
+<div class="bg-white p-6 rounded-lg shadow-md text-center">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+<i class="ri-home-heart-line ri-xl text-primary"></i>
+</div>
+<h3 class="text-xl font-semibold text-gray-800 mb-3">4. Adopt</h3>
+<p class="text-gray-600">Complete the adoption process and welcome your new pet home!</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Impact Stats Section -->
+<section class="py-16 bg-primary text-white">
+<div class="container mx-auto px-4">
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold mb-3">Our Impact This Year</h2>
+<p class="max-w-2xl mx-auto opacity-90">Together, we're making a difference in the lives of animals in need.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<div class="text-center">
+<p class="text-5xl font-bold mb-2">487</p>
+<p class="text-xl">Pets Adopted</p>
+</div>
+<div class="text-center">
+<p class="text-5xl font-bold mb-2">623</p>
+<p class="text-xl">Pets Rescued</p>
+</div>
+<div class="text-center">
+<p class="text-5xl font-bold mb-2">$152K</p>
+<p class="text-xl">Donations Received</p>
+</div>
+<div class="text-center">
+<p class="text-5xl font-bold mb-2">12,450</p>
+<p class="text-xl">Volunteer Hours</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Ways to Help Section -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold text-gray-800 mb-3">Ways You Can Help</h2>
+<p class="text-gray-600 max-w-2xl mx-auto">There are many ways to support our mission of finding loving homes for all animals.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Donate Card -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="h-48 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=A%20heartwarming%20image%20showing%20hands%20holding%20a%20donation%20box%20with%20pet%20supplies%20and%20monetary%20donations.%20The%20image%20has%20a%20bright%2C%20hopeful%20atmosphere%20with%20soft%20lighting%20and%20a%20simple%20background%20that%20matches%20the%20websites%20color%20scheme.%20The%20composition%20focuses%20on%20the%20act%20of%20giving%20and%20helping%20animals%20in%20need.&width=600&height=400&seq=6&orientation=landscape" alt="Donate" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<h3 class="text-2xl font-semibold text-gray-800 mb-3">Donate</h3>
+<p class="text-gray-600 mb-5">Your financial support helps us provide food, shelter, medical care, and more to animals in need.</p>
+<a href="donatepage.html" class="block w-full bg-secondary text-white text-center py-3 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">Make a Donation</a>
+</div>
+</div>
+<!-- Volunteer Card -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="h-48 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=A%20diverse%20group%20of%20volunteers%20happily%20working%20at%20an%20animal%20shelter%2C%20caring%20for%20dogs%20and%20cats.%20The%20volunteers%20are%20engaged%20in%20activities%20like%20walking%20dogs%2C%20cleaning%20kennels%2C%20and%20socializing%20with%20animals.%20The%20image%20has%20the%20same%20bright%2C%20hopeful%20atmosphere%20and%20simple%20background%20as%20the%20donation%20image%20for%20visual%20consistency.&width=600&height=400&seq=7&orientation=landscape" alt="Volunteer" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<h3 class="text-2xl font-semibold text-gray-800 mb-3">Volunteer</h3>
+<p class="text-gray-600 mb-5">Donate your time and skills to help care for animals, assist with events, or provide administrative support.</p>
+<a href="volunteerpage.html" class="block w-full bg-primary text-white text-center py-3 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">Become a Volunteer</a>
+</div>
+</div>
+<!-- Foster Card -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="h-48 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=A%20warm%2C%20inviting%20image%20of%20a%20person%20fostering%20a%20puppy%20or%20kitten%20at%20home.%20The%20scene%20shows%20gentle%20interaction%20between%20the%20foster%20parent%20and%20the%20animal%20in%20a%20cozy%20home%20environment.%20The%20lighting%20is%20soft%20and%20the%20background%20is%20simple%2C%20matching%20the%20style%20of%20the%20previous%20two%20images%20for%20visual%20consistency%20across%20the%20website.&width=600&height=400&seq=8&orientation=landscape" alt="Foster" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-6">
+<h3 class="text-2xl font-semibold text-gray-800 mb-3">Adopt</h3>
+<p class="text-gray-600 mb-5">Provide a temporary home for animals awaiting adoption, giving them the love and care they need.</p>
+<a href="adoptpage.html" class="block w-full bg-primary text-white text-center py-3 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">Become a Adopter</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials Section -->
+<section class="py-16 bg-gray-50">
+<div class="container mx-auto px-4">
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold text-gray-800 mb-3">Happy Tails</h2>
+<p class="text-gray-600 max-w-2xl mx-auto">Stories from families who found their perfect companions through our shelter.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Testimonial 1 -->
+<div class="bg-white p-6 rounded-lg shadow-md">
+<div class="flex items-center mb-4">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+<i class="ri-user-line ri-lg text-primary"></i>
+</div>
+<div>
+<h4 class="font-semibold text-gray-800">prem & Chandrika</h4>
+<p class="text-gray-500 text-sm">Adopted 8 months ago</p>
+</div>
+</div>
+<p class="text-gray-700 mb-4">"Adopting Charlie was the best decision we ever made. He's brought so much joy and laughter into our home. The adoption process was smooth, and the staff was incredibly helpful in matching us with the perfect dog for our family."</p>
+<div class="flex text-secondary">
+<i class="ri-star-fill ri-sm"></i>
+<i class="ri-star-fill ri-sm"></i>
+<i class="ri-star-fill ri-sm"></i>
+<i class="ri-star-fill ri-sm"></i>
+<i class="ri-star-fill ri-sm"></i>
+</div>
+</div>
+<!-- Testimonial 2 -->
+<div class="bg-white p-6 rounded-lg shadow-md">
+<div class="flex items-center mb-4">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+<i class="ri-user-line ri-lg text-primary"></i>
+</div>
+<div>
+<h4 class="font-semibold text-gray-800">srinu & siri</h4>
+<p class="text-gray-500 text-sm">Adopted 1 year ago</p>
+</div>
+</div>
+<p class="text-gray-700 mb-4">"Luna has been the perfect addition to my apartment. As a first-time cat owner, I was nervous, but the shelter provided all the information and support I needed. Now I can't imagine life without her purring next to me while I work."</p>
+<div class="flex text-secondary">
+<i class="ri-star-fill ri-sm"></i>
+<i class="ri-star-fill ri-sm"></i>
+<i class="ri-star-fill ri-sm"></i>
+<i class="ri-star-fill ri-sm"></i>
+<i class="ri-star-fill ri-sm"></i>
+</div>
+</div>
+<!-- Testimonial 3 -->
+<div class="bg-white p-6 rounded-lg shadow-md">
+<div class="flex items-center mb-4">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+<i class="ri-user-line ri-lg text-primary"></i>
+</div>
+<div>
+<h4 class="font-semibold text-gray-800">The jagruthi Family</h4>
+<p class="text-gray-500 text-sm">Adopted 6 months ago</p>
+</div>
+</div>
+<p class="text-gray-700 mb-4">"We adopted both Rosie and Max, and watching them grow together has been amazing. Our kids have learned so much about responsibility and compassion. Thank you for helping us complete our family with these wonderful dogs."</p>
+<div class="flex text-secondary">
+<i class="ri-star-fill ri-sm"></i>
+<i class="ri-star-fill ri-sm"></i>
+<i class="ri-star-fill ri-sm"></i>
+<i class="ri-star-fill ri-sm"></i>
+<i class="ri-star-half-fill ri-sm"></i>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter Section -->
+<section class="py-16 bg-secondary/10">
+<div class="container mx-auto px-4">
+<div class="max-w-3xl mx-auto text-center">
+<h2 class="text-3xl font-bold text-gray-800 mb-3">Stay Updated</h2>
+<p class="text-gray-600 mb-8">Subscribe to our newsletter for adoption events, success stories, and more.</p>
+<form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+<input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded-lg border-none focus:ring-2 focus:ring-primary outline-none">
+<button type="submit" class="bg-secondary text-white px-6 py-3 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">Subscribe</button>
+</form>
+<p class="text-gray-500 text-sm mt-4">We respect your privacy. Unsubscribe at any time.</p>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-gray-800 text-white pt-12 pb-6">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+<div>
+<h3 class="text-xl font-semibold mb-4">Pet Adoption</h3>
+<p class="text-gray-300 mb-4">We're dedicated to finding loving homes for animals in need and supporting pet owners in our community.</p>
+<div class="flex space-x-4">
+<a href="#" class="text-gray-300 hover:text-white transition-colors">
+<i class="ri-facebook-fill ri-lg"></i>
+</a>
+<a href="#" class="text-gray-300 hover:text-white transition-colors">
+<i class="ri-instagram-line ri-lg"></i>
+</a>
+<a href="#" class="text-gray-300 hover:text-white transition-colors">
+<i class="ri-twitter-x-line ri-lg"></i>
+</a>
+<a href="#" class="text-gray-300 hover:text-white transition-colors">
+<i class="ri-youtube-line ri-lg"></i>
+</a>
+</div>
+</div>
+<div>
+<h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+<ul class="space-y-2">
+<li><a href="#" class="text-gray-300 hover:text-white transition-colors">Available Pets</a></li>
+<li><a href="adoptpage.html" class="text-gray-300 hover:text-white transition-colors">Adoption Process</a></li>
+<li><a href="donatepage.html" class="text-gray-300 hover:text-white transition-colors">Donation Options</a></li>
+<li><a href="volunteerpage.html" class="text-gray-300 hover:text-white transition-colors">Volunteer Opportunities</a></li>
+<li><a href="homepage.html" class="text-gray-300 hover:text-white transition-colors">Success Stories</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-xl font-semibold mb-4">Contact Us</h3>
+<ul class="space-y-2">
+<li class="flex items-start">
+<i class="ri-map-pin-line ri-lg mr-2 mt-1"></i>
+<span>Danavaipeta, Rajahmundry</span>
+</li>
+<li class="flex items-start">
+<i class="ri-phone-line ri-lg mr-2 mt-1"></i>
+<span>6304359424</span>
+</li>
+<li class="flex items-start">
+<i class="ri-mail-line ri-lg mr-2 mt-1"></i>
+<span>petadoption@gmail.com</span>
+</li>
+<li class="flex items-start">
+<i class="ri-time-line ri-lg mr-2 mt-1"></i>
+<span>Open daily: 10am - 6pm</span>
+</li>
+</ul>
+</div>
+<div>
+<h3 class="text-xl font-semibold mb-4">Emergency</h3>
+<p class="text-gray-300 mb-2">24/7 Animal Rescue Hotline:</p>
+<p class="text-xl font-bold text-secondary mb-4">+91 6382493541</p>
+<p class="text-gray-300 mb-2">For injured or distressed animals requiring immediate assistance.</p>
+</div>
+</div>
+<div class="border-t border-gray-700 pt-6 mt-6">
+<div class="flex flex-col md:flex-row justify-between items-center">
+<p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 pet Adoption. All rights reserved.</p>
+<div class="flex space-x-4">
+<a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
+<a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
+<a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Accessibility</a>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<script id="mobileMenuScript">
+document.addEventListener('DOMContentLoaded', function() {
+const menuButton = document.querySelector('.ri-menu-line').parentElement;
+const nav = document.querySelector('nav');
+menuButton.addEventListener('click', function() {
+if (nav.classList.contains('hidden')) {
+nav.classList.remove('hidden');
+nav.classList.add('flex', 'flex-col', 'absolute', 'top-16', 'left-0', 'right-0', 'bg-white', 'shadow-md', 'p-4', 'space-y-4', 'z-50');
+menuButton.innerHTML = '<i class="ri-close-line ri-lg"></i>';
+} else {
+nav.classList.add('hidden');
+nav.classList.remove('flex', 'flex-col', 'absolute', 'top-16', 'left-0', 'right-0', 'bg-white', 'shadow-md', 'p-4', 'space-y-4', 'z-50');
+menuButton.innerHTML = '<i class="ri-menu-line ri-lg"></i>';
+}
+});
+// Close menu when window is resized to desktop size
+window.addEventListener('resize', function() {
+if (window.innerWidth >= 768) {
+nav.classList.remove('flex', 'flex-col', 'absolute', 'top-16', 'left-0', 'right-0', 'bg-white', 'shadow-md', 'p-4', 'space-y-4', 'z-50');
+nav.classList.add('hidden', 'md:flex');
+menuButton.innerHTML = '<i class="ri-menu-line ri-lg"></i>';
+}
+});
+});
+</script>
+</body>
+</html>
